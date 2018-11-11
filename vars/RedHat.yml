@@ -1,0 +1,7 @@
+---
+__ntp_packages:
+  - libselinux-python
+  - ntp
+  - ntpdate
+  - ntp-doc
+__ntp_daemon: ntpd

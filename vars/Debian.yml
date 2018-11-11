@@ -1,0 +1,7 @@
+---
+__ntp_packages:
+  - python-selinux
+  - ntp
+  - ntpdate
+  - ntp-doc
+__ntp_daemon: ntp

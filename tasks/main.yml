@@ -1,0 +1,44 @@
+---
+- name: Add the OS specific variables
+  include_tasks: variables.yml
+
+- name: Ensure tzdata package is installed (Linux).
+  package:
+    name: tzdata
+    state: present
+  when: ansible_system == "Linux"
+
+- name: Set timezone
+  timezone:
+    name: "{{ ntp_timezone }}"
+
+- name: Check if NTP is already installed.
+  stat: path=/etc/init.d/"{{ ntp_daemon }}"
+  register: ntp_installed
+
+- block:
+    - name: Install the required  packages in Redhat derivatives
+      yum: name={{ item }} state=installed
+      with_items: '{{ ntp_packages }}'
+      when: ansible_os_family == 'RedHat'
+
+    - name: Install the required packages in Debian derivatives
+      apt: name={{ item }} state=installed update_cache=yes
+      with_items: '{{ ntp_packages }}'
+      environment: env
+      when: ansible_os_family == 'Debian'
+  when: ntp_installed.stat.exists == false
+
+- name: Force to verify system time.
+  shell: ntpdate ntp_master
+
+- name: Copy the ntp.key file
+  copy:
+    remote_src: false
+    src: ntp.keys
+    dest: "{{ ntp_keys }}"
+
+- name: Copy the ntp.conf template file
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify: 
+   - restart ntp
