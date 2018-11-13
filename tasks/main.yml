@@ -35,8 +35,10 @@
     src: ntp.keys
     dest: "{{ ntp_keys }}"
 
+- name: Force to verify system time.
+  shell: ntpdate "{{ ntp_master }}"
+
 - name: Copy the ntp.conf template file
   template: src=ntp.conf.j2 dest=/etc/ntp.conf
   notify:
-    - Force to verify system time.
     - Restart ntp
