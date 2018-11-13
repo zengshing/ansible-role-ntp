@@ -29,9 +29,6 @@
       when: ansible_os_family == 'Debian'
   when: ntp_installed.stat.exists == false
 
-- name: Force to verify system time.
-  shell: ntpdate ntp_master
-
 - name: Copy the ntp.key file
   copy:
     remote_src: false
@@ -41,4 +38,5 @@
 - name: Copy the ntp.conf template file
   template: src=ntp.conf.j2 dest=/etc/ntp.conf
   notify:
-    - restart ntp
+    - Force to verify system time.
+    - Restart ntp

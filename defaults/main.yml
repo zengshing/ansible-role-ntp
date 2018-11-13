@@ -2,7 +2,9 @@
 ntp_timezone: "Asia/Shanghai"
 
 ntp_driftfile: /var/lib/ntp/drift
-ntp_server: [ntp_master, 0.ubuntu.pool.ntp.org, 1.ubuntu.pool.ntp.org]
+ntp_server: 
+  - 0.ubuntu.pool.ntp.org
+  - 1.ubuntu.pool.ntp.org
 ntp_restrict:
   - "restrict -4 default kod notrap nomodify nopeer noquery"
   - "restrict -6 default kod notrap nomodify nopeer noquery"
