@@ -37,7 +37,7 @@
 
 - name: Force to verify system time.
   shell: ntpdate "{{ ntp_master }}"
-  changed_when: ntp_installed.failed
+  changed_when: false
 
 - name: Copy the ntp.conf template file
   template: src=ntp.conf.j2 dest=/etc/ntp.conf
