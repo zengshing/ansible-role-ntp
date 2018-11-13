@@ -1,6 +1,6 @@
 ---
 - name: Force to verify system time.
-  shell: ntpdate "{{ ntp_server|list }}[0]"
+  shell: ntpdate "{{ ntp_master }}"
 
 - name: Restart ntp
   service: name={{ ntp_daemon }} state=restarted enabled=yes

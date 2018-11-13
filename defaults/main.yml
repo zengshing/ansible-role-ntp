@@ -20,3 +20,4 @@ ntp_statistics: no
 ntp_broadcast: no
 ntp_broadcastclient: no
 ntp_multicastclient: no
+ntp_master: 0.ubuntu.pool.ntp.org
